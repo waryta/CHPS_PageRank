@@ -15,7 +15,7 @@ int main()
 void aff()
 {
     int v, w, i,j;
-    float **T;
+    int **T;
     float **R;//matrice d'adjacence
     float **P;//matrice de probabilité
     float **Trans;//matrice transposée
@@ -23,18 +23,18 @@ void aff()
     float *posInit;//position initaile du promeneur
 
 
-    float *tab;
+    int *tab;
 
     printf("Entrez le nombre de lignes : ");
     scanf("%d", &v);
     printf("Entrez le nombre de colonnes : ");
     scanf("%d", &w);
-    T = calloc(v , sizeof(float*));
+    T = calloc(v , sizeof(int*));
     Trans = calloc(v , sizeof(float*));
 
     P = calloc(v , sizeof(int*));
 
-    tab= calloc(w , sizeof(float));
+    tab= calloc(w , sizeof(int));
 	posInit= calloc(w , sizeof(float));
 
     R = calloc(v-1 , sizeof(float*));
@@ -58,21 +58,21 @@ void aff()
     for (i=0; i<v; i++)
     {
      for (j=0; j<w; j++)
-         printf("%.2f", T[i][j]);
+         printf("%d", T[i][j]);
      printf("\n");
     }
     for (i=0; i<v; i++)
     for (j=0; j<w; j++)
         {
          printf("Elément[%d][%d] : ",i,j);
-         scanf("%f", &T[i][j]);
+         scanf("%d", &T[i][j]);
         }
   /* Affichage du tableau */
  printf("Tableau donné :\n");
  for (i=0; i<v; i++)
     {
      for (j=0; j<w; j++)
-         printf("%.2f", T[i][j]);
+         printf("%d", T[i][j]);
      printf("\n");
     }
     /*calcule matrice d'adjancence*/
@@ -86,7 +86,7 @@ void aff()
 		 {
 			R[i-1][T[i][j]]=1;
 
-			printf("\n on rempli le tab %d %d avec %d \n",i-1,T[i][j],R[i-1][T[i][j]]);
+			printf("\n on rempli le tab %d %d avec %.2f \n",i-1,T[i][j],R[i-1][T[i][j]]);
 
 		 }
 
@@ -96,9 +96,11 @@ void aff()
 	for (i=0; i<v; i++)
     {
      for (j=0; j<w; j++)
-     printf("la mat %d %d est %d \n",i,j,R[i][j]);
+     {
+		 printf("la mat %d %d est %.2f \n",i,j,R[i][j]);
 
-     printf("%d", R[i][j]);
+		 printf("%.2f", R[i][j]);
+	 }
      printf("\n");
     }
 
@@ -129,7 +131,7 @@ void aff()
      printf("pour la matrice de probabilité \n");
      for (i=0; i<w; i++)
      {
-        printf("%.2f", tab[i]);
+        printf("%d", tab[i]);
 		printf("\n");
      }
      printf("matrice de transition ou de probabilité \n");
