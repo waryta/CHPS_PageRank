@@ -46,9 +46,14 @@ void aff()
 
         P[i] = calloc(w, sizeof(float));
 
-        R[i] = calloc(w, sizeof(float));
+    }
+	
+    for (i = 0 ; i < v-1 ; i++)
+    {
+        R[i] = calloc(w, sizeof(int));
 
     }
+	
     printf("Tableau donné à l'initialisation:\n");
     for (i=0; i<v; i++)
     {
@@ -70,38 +75,33 @@ void aff()
          printf("%.2f", T[i][j]);
      printf("\n");
     }
-    /*calcule matrice d'adjancence
-    int a,b=0;
+    /*calcule matrice d'adjancence*/
+	    
+
     for (i=1; i<v; i++)
-    {
-     for (j=0; j<w; j++)
+    { printf( "\n i vaut %d",i);
+     for (j=1; j<w; j++)
      {
-		 if(T[i][j]==j)
+		 if(T[i][j]!=-1)
 		 {
-			 
-			R[i][j]=1;
-			printf("on rempli le tab %d %d avec %d \n",i-1,j,R[i-1][j]);
-			
-		 }
-		 else
-		 {
-			R[i][j]=0; 
-			printf("on rempli le tab %d %d avec %d \n",i-1,j-1,R[i-1][j-1]);
+			R[i-1][T[i][j]]=1;
+
+			printf("\n on rempli le tab %d %d avec %d \n",i-1,T[i][j],R[i-1][T[i][j]]);
 
 		 }
-		 b+=1;
+
 	  }
-	  a+=1;
     }
-     printf("affichage matrice d'incidence :\n");
- for (i=0; i<v-1; i++)
+	
+	for (i=0; i<v; i++)
     {
      for (j=0; j<w; j++)
      printf("la mat %d %d est %d \n",i,j,R[i][j]);
 
      printf("%d", R[i][j]);
      printf("\n");
-    }*/
+    }
+
 	/*calcul de la transposée*/
     printf("matrice transposée \n");
     for (i=0; i<v; i++)
