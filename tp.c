@@ -6,18 +6,21 @@
 void aff();
 int main()
 {
-	
+
  aff();
 }
 
 
- 
+
 void aff()
 {
     int v, w, i,j;
     int **T,**R;
-    float **Trans,**P;
+    float **Trans,**P,**V;
     float *tab;
+    float alpha = 0.85;
+    float E =0.000006;
+    int k = 0;
 
 
     printf("Entrez le nombre de lignes : ");
@@ -29,7 +32,9 @@ void aff()
 	P = calloc(v , sizeof(float*));
 
     R = calloc(v-1 , sizeof(int*));
-        tab= calloc(w , sizeof(float));
+    tab = calloc(w , sizeof(float));
+    V = calloc(2 , sizeof(float*)); //V contient les tableaux des vecteurs x-1 et x0 ( respectivement dans V[0] et V[1] )
+
 
 
     for (i = 0 ; i < v ; i++)
@@ -37,10 +42,36 @@ void aff()
         T[i] = calloc(w, sizeof(int));
 		Trans[i] = calloc(w, sizeof(float));
 		P[i] = calloc(w, sizeof(float));
-
         R[i] = calloc(w, sizeof(int));
 
     }
+
+    for (i = 0 ; i < 2 ; i++)
+    {
+       V[i] = calloc(w, sizeof(float));
+
+       if (i == 1)
+       {
+          V[i][1] = 1;
+         /* for (j = 0 ; j < w ; j++)
+          {
+            V[i][j] = 1/w;  je voulais faire comme la prof mais ici ça donne toujours 0.00
+          }*/
+       }
+
+    }
+
+    printf("Vecteurs x-1 suivi de x0:\n");
+    for (i=0; i<2; i++)
+    {
+
+      for (j=0; j<w; j++)
+      {
+        printf("%.2f", V[i][j]);
+      }
+      printf("\n");
+    }
+
     printf("Tableau donné à l'initialisation:\n");
     for (i=0; i<v; i++)
     {
@@ -59,9 +90,9 @@ void aff()
  for (i=0; i<v; i++)
    {
      for (j=0; j<w; j++)
-     
+
          printf("%d", T[i][j]);
-	 
+
      printf("\n");
   }
     printf("cc1");
@@ -84,7 +115,7 @@ void aff()
 			printf("\n on rempli le tab %d %d avec %d \n",i-1,T[i][j],R[i-1][T[i][j]]);
 
 		 }
-		 
+
 	 }
    }
 	 for (i=0; i<v-1; i++)
@@ -111,7 +142,7 @@ void aff()
     {
 		for (i=0; i<v-1; i++)
 		{
-			
+
 		 s=s+Trans[i][j];
 		 tab[j]=s;
 		}
@@ -125,7 +156,7 @@ void aff()
         printf("%.2f", tab[i]);
 		printf("\n");
      }
-    
+
      int r=0;
 	for (i=0; i<v; i++)
     {
@@ -145,6 +176,9 @@ void aff()
 			}
 				printf("\n");
      }
+
+
+
 }
 
 
