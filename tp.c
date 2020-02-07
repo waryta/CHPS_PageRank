@@ -3,6 +3,10 @@
 #include <time.h>
 
 
+
+#define α 0.85
+#define Ɛ 0.000006
+
 void aff();
 int main()
 {
