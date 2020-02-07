@@ -72,6 +72,7 @@ void aff()
       printf("\n");
     }
 
+
     printf("Tableau donné à l'initialisation:\n");
     for (i=0; i<v; i++)
     {
@@ -177,6 +178,27 @@ void aff()
 				printf("\n");
      }
 
+  /* Affectation du résultat de la multiplication à V[1] */
+       for (i=0; i<w; i++)
+         for (j=0; j<1; j++)
+         {
+             for (k=0; k<w; k++)
+             {  printf( "                k vaut %d",k);
+                printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
+                V[0][i] += P[i][k]*V[1][k];
+             }
+         }
+
+     printf("Vecteurs x-1 suivi de x0:\n");
+    for (i=0; i<2; i++)
+    {
+
+      for (j=0; j<w; j++)
+      {
+        printf("%.2f", V[i][j]);
+      }
+      printf("\n");
+    }
 
 
 }
