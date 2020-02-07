@@ -6,8 +6,8 @@
 
 
 
-//#define α 0.85
-//#define Ɛ 0.000006
+# define ALPHA 0.85
+# define TOLERANCE 0.000006
 
 void aff();
 int main()
@@ -22,13 +22,13 @@ void aff()
 {
     int v, w, i,j;
     int **T,**R;
-    float **Trans,**P,**V;
+    float **Trans,**P,**V,**tab_New;
     float *tab;
     float alpha = 0.85;
     float E =0.000006;
     int k = 0;
     float *a,*b;
-    float *x_1;
+    float *x_1,*x1,xk,xk+1;
 
 
 
@@ -48,7 +48,8 @@ void aff()
 	a = calloc(w , sizeof(float));
 	b= calloc(w , sizeof(float));
 	x_1 = calloc(w , sizeof(float));
-
+	x1 = calloc(w , sizeof(float));
+	tab_New = calloc(v , sizeof(float*));
 
 
     for (i = 0 ; i < v ; i++)
@@ -57,6 +58,8 @@ void aff()
 		Trans[i] = calloc(w, sizeof(float));
 		P[i] = calloc(w, sizeof(float));
         R[i] = calloc(w, sizeof(int));
+        tab_New[i] = calloc(w, sizeof(float));
+
 
     }
 
@@ -218,29 +221,7 @@ void aff()
 				printf("\n");
      }
 
-  /* Affectation du résultat de la multiplication à V[1] 
-       for (i=0; i<w; i++)
-       {
-         for (j=0; j<1; j++)
-         {
-             for (k=0; k<w; k++)
-            printf( "                k vaut %d",k);
-                printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
-                V[0][i] += P[i][k]*V[1][k];
-                printf("von a alors %.2f \n",V[0][i]);
-           }
-             
-             
-         }
-         
-        /* for (k=0; k<w; k++)
-              {
-				    V[1][k] =  V[0][k] ;
-				 
-			  }*/
-			  
-/* Affectation du résultat de la multiplication à V[1] */
-
+  
        for (i=0; i<w; i++)
          for (j=0; j<1; j++)
          {
@@ -248,11 +229,14 @@ void aff()
              {  printf( "                k vaut %d",k);
                 printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
                 V[0][i] += P[i][k]*V[1][k];
+                
              }
          }
          for (k=0; k<w; k++)
               {
 				    V[1][k] =  V[0][k] ;
+				    xk[k] = V[0][k];
+				    xk_1[k] = V[0][k];
 				 
 			  }
 printf("on a alors %.2f \n",V[0][i]);
@@ -281,8 +265,18 @@ printf("on a alors %.2f \n",V[0][i]);
 	norme=sqrtf(val);
 	
 	printf("la morme est %.2f \n",norme);
-
-
+while morme > TOLERANCE
+	{
+		for (i=0; i<w; i++)
+         for (j=0; j<1; j++)
+         {
+             for (k=0; k<w; k++)
+             {  
+                V[0][i] += P[i][k]*V[1][k];
+                
+             }
+         }
+	}
 
 }
 
