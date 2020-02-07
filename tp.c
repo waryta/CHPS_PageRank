@@ -28,7 +28,7 @@ void aff()
     float E =0.000006;
     int k = 0;
     float *a,*b;
-    float *x_1,*x1,xk,xk+1;
+    float *x_1,*x1,*xk,*xk_1;
 
 
 
@@ -44,11 +44,14 @@ void aff()
 
     R = calloc(v-1 , sizeof(int*));
     tab = calloc(w , sizeof(float));
-    V = calloc(2 , sizeof(float*)); //V contient les tableaux des vecteurs x-1 et x0 ( respectivement dans V[0] et V[1] )
+    V = calloc(3 , sizeof(float*)); //V contient les tableaux des vecteurs x-1 et x0 ( respectivement dans V[0] et V[1] )
 	a = calloc(w , sizeof(float));
 	b= calloc(w , sizeof(float));
 	x_1 = calloc(w , sizeof(float));
 	x1 = calloc(w , sizeof(float));
+	xk = calloc(w , sizeof(float));
+	xk_1=calloc(w , sizeof(float));
+
 	tab_New = calloc(v , sizeof(float*));
 
 
@@ -63,11 +66,11 @@ void aff()
 
     }
 
-    for (i = 0 ; i < 2 ; i++)
+    for (i = 0 ; i < 3 ; i++)
     {
        V[i] = calloc(w, sizeof(float));
 
-       if (i == 1)
+       if (i > 0)
        {
           V[i][1] = 1;
          /* for (j = 0 ; j < w ; j++)
@@ -107,22 +110,22 @@ void aff()
     T[0][1] =-1;
     T[0][2] =-1;
     T[0][3] =-1;
-    
+
     T[1][0] =0;
     T[1][1] =1;
     T[1][2] =2;
     T[1][3] =-1;
-    
+
     T[2][0] =1;
     T[2][1] =0;
     T[2][2] =3;
     T[2][3] =2;
-    
+
     T[3][0] =2;
     T[3][1] =0;
     T[3][2] =1;
     T[3][3] =-1;
-    
+
     T[4][0] =3;
     T[4][1] =2;
     T[4][2] =-1;
@@ -221,7 +224,30 @@ void aff()
 				printf("\n");
      }
 
-  
+  /* Affectation du résultat de la multiplication à V[1]
+       for (i=0; i<w; i++)
+       {
+         for (j=0; j<1; j++)
+         {
+             for (k=0; k<w; k++)
+            printf( "                k vaut %d",k);
+                printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
+                V[0][i] += P[i][k]*V[1][k];
+                printf("von a alors %.2f \n",V[0][i]);
+           }
+
+
+         }
+
+        /* for (k=0; k<w; k++)
+              {
+				    V[1][k] =  V[0][k] ;
+
+			  }*/
+
+/* Affectation du résultat de la multiplication à V[1] */
+
+
        for (i=0; i<w; i++)
          for (j=0; j<1; j++)
          {
@@ -235,9 +261,11 @@ void aff()
          for (k=0; k<w; k++)
               {
 				    V[1][k] =  V[0][k] ;
-				    xk[k] = V[0][k];
-				    xk_1[k] = V[0][k];
+				    xk[k] = V[0][k];//x1
+				   // xk_1[k] = V[2][k];//x0
 				 
+
+
 			  }
 printf("on a alors %.2f \n",V[0][i]);
      printf("Vecteurs x-1 suivi de x0:\n");
@@ -254,28 +282,33 @@ printf("on a alors %.2f \n",V[0][i]);
 
 	for(i=0;i<w;i++)
 	{
-		a[i]=V[0][i] - x_1[i];
+		a[i]=V[2][i] - xk_1[k];
 		b[i]=a[i]*a[i];
 	}
-	float val=0.00;float norme=0;
+	float val=0.00;
+	float norme=0.00;
 	for(i=0;i<w;i++)
 	{
 		val+=b[i];
 	}
 	norme=sqrtf(val);
-	
+
 	printf("la morme est %.2f \n",norme);
-while morme > TOLERANCE
+while(norme > TOLERANCE)
 	{
 		for (i=0; i<w; i++)
          for (j=0; j<1; j++)
          {
              for (k=0; k<w; k++)
              {  
-                V[0][i] += P[i][k]*V[1][k];
+                V[0][i] += P[i][k]*V[0][k];
                 
              }
          }
+         for (k=0; k<w; k++)
+              {
+				    V[1][k] =  V[0][k] ;
+			  }
 	}
 
 }
