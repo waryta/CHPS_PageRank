@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 
 
-#define α 0.85
-#define Ɛ 0.000006
+
+//#define α 0.85
+//#define Ɛ 0.000006
 
 void aff();
 int main()
@@ -25,12 +27,17 @@ void aff()
     float alpha = 0.85;
     float E =0.000006;
     int k = 0;
+    float *a,*b;
+    float *x_1;
 
 
-    printf("Entrez le nombre de lignes : ");
+
+    /*printf("Entrez le nombre de lignes : ");
     scanf("%d", &v);
     printf("Entrez le nombre de colonnes : ");
-    scanf("%d", &w);
+    scanf("%d", &w);*/
+    v=5;
+    w=4;
     T = calloc(v , sizeof(int*));
 	Trans = calloc(v , sizeof(float*));
 	P = calloc(v , sizeof(float*));
@@ -38,6 +45,9 @@ void aff()
     R = calloc(v-1 , sizeof(int*));
     tab = calloc(w , sizeof(float));
     V = calloc(2 , sizeof(float*)); //V contient les tableaux des vecteurs x-1 et x0 ( respectivement dans V[0] et V[1] )
+	a = calloc(w , sizeof(float));
+	b= calloc(w , sizeof(float));
+	x_1 = calloc(w , sizeof(float));
 
 
 
@@ -84,12 +94,38 @@ void aff()
          printf("%d", T[i][j]);
      printf("\n");
     }
-    for (i=0; i<v; i++)
+    /*for (i=0; i<v; i++)
     for (j=0; j<w; j++)
         {
          printf("Elément[%d][%d] : ",i,j);
          scanf("%d", &T[i][j]);
-        }
+        }*/
+    T[0][0] =4;
+    T[0][1] =-1;
+    T[0][2] =-1;
+    T[0][3] =-1;
+    
+    T[1][0] =0;
+    T[1][1] =1;
+    T[1][2] =2;
+    T[1][3] =-1;
+    
+    T[2][0] =1;
+    T[2][1] =0;
+    T[2][2] =3;
+    T[2][3] =2;
+    
+    T[3][0] =2;
+    T[3][1] =0;
+    T[3][2] =1;
+    T[3][3] =-1;
+    
+    T[4][0] =3;
+    T[4][1] =2;
+    T[4][2] =-1;
+    T[4][3] =-1;
+
+
   /* Affichage du tableau */
  printf("Tableau donné :\n");
  for (i=0; i<v; i++)
@@ -182,7 +218,29 @@ void aff()
 				printf("\n");
      }
 
-  /* Affectation du résultat de la multiplication à V[1] */
+  /* Affectation du résultat de la multiplication à V[1] 
+       for (i=0; i<w; i++)
+       {
+         for (j=0; j<1; j++)
+         {
+             for (k=0; k<w; k++)
+            printf( "                k vaut %d",k);
+                printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
+                V[0][i] += P[i][k]*V[1][k];
+                printf("von a alors %.2f \n",V[0][i]);
+           }
+             
+             
+         }
+         
+        /* for (k=0; k<w; k++)
+              {
+				    V[1][k] =  V[0][k] ;
+				 
+			  }*/
+			  
+/* Affectation du résultat de la multiplication à V[1] */
+
        for (i=0; i<w; i++)
          for (j=0; j<1; j++)
          {
@@ -192,7 +250,12 @@ void aff()
                 V[0][i] += P[i][k]*V[1][k];
              }
          }
-
+         for (k=0; k<w; k++)
+              {
+				    V[1][k] =  V[0][k] ;
+				 
+			  }
+printf("on a alors %.2f \n",V[0][i]);
      printf("Vecteurs x-1 suivi de x0:\n");
     for (i=0; i<2; i++)
     {
@@ -203,6 +266,22 @@ void aff()
       }
       printf("\n");
     }
+//boucle pour les calculs
+
+	for(i=0;i<w;i++)
+	{
+		a[i]=V[0][i] - x_1[i];
+		b[i]=a[i]*a[i];
+	}
+	float val=0.00;float norme=0;
+	for(i=0;i<w;i++)
+	{
+		val+=b[i];
+	}
+	norme=sqrtf(val);
+	
+	printf("la morme est %.2f \n",norme);
+
 
 
 }
