@@ -23,6 +23,7 @@ void aff()
     int v, w, i,j;
     int **T,**R;
     float **Trans,**P,**V,**tab_New;
+    float **Proba;
     float *tab;
     float alpha = 0.85;
     float E =0.000006;
@@ -41,6 +42,8 @@ void aff()
     T = calloc(v , sizeof(int*));
 	Trans = calloc(v , sizeof(float*));
 	P = calloc(v , sizeof(float*));
+	Proba = calloc(v , sizeof(float*));
+
 
     R = calloc(v-1 , sizeof(int*));
     tab = calloc(w , sizeof(float));
@@ -59,6 +62,7 @@ void aff()
     {
         T[i] = calloc(w, sizeof(int));
 		Trans[i] = calloc(w, sizeof(float));
+		Proba[i] = calloc(w, sizeof(float));
 		P[i] = calloc(w, sizeof(float));
         R[i] = calloc(w, sizeof(int));
         tab_New[i] = calloc(w, sizeof(float));
@@ -70,16 +74,17 @@ void aff()
     {
        V[i] = calloc(w, sizeof(float));
 
-       if (i > 0)
+       /*if (i > 0)
        {
           V[i][1] = 1;
          /* for (j = 0 ; j < w ; j++)
           {
             V[i][j] = 1/w;  je voulais faire comme la prof mais ici ça donne toujours 0.00
-          }*/
-       }
-
+          }
+       }*/
+		V[i][j] = 1.00/w;
     }
+    printf("la valeur de 1.00/w est %.2f \n",1.00/w);
 
     printf("Vecteurs x-1 suivi de x0:\n");
     for (i=0; i<2; i++)
@@ -205,15 +210,33 @@ void aff()
      }
 
      int r=0;
+     int t=2;
+     float e;
+     float div;
+     div=1.00/4.00;
+     e=(1-ALPHA)*(1.00/5.00);
+     printf("la valeur de e est %.2f %.2f \n",e,div);
 	for (i=0; i<v; i++)
     {
      for (j=0; j<w; j++)
      {
-        printf("%.2f", Trans[i][j]/tab[j]);
-        P[i][j]=Trans[i][j]/tab[j];
+        //printf("%.2f", Trans[i][j]/tab[j]);
+        //P[i][j]=Trans[i][j]/tab[j];
+        if(Trans[i][j]!=0)
+        {
+			P[i][j]=ALPHA*(Trans[i][j]/tab[j])*e;
+		}
+		else
+		{
+			P[i][j]=1.00/4.00;
+		}
+		
      }
 		printf("\n");
     }
+    
+   
+    
  printf("matrice de transition ou de probabilité \n");
      for (i=0; i<w; i++)
      {
@@ -223,37 +246,18 @@ void aff()
 			}
 				printf("\n");
      }
+     
+     
 
-  /* Affectation du résultat de la multiplication à V[1]
-       for (i=0; i<w; i++)
-       {
-         for (j=0; j<1; j++)
-         {
-             for (k=0; k<w; k++)
-            printf( "                k vaut %d",k);
-                printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
-                V[0][i] += P[i][k]*V[1][k];
-                printf("von a alors %.2f \n",V[0][i]);
-           }
-
-
-         }
-
-        /* for (k=0; k<w; k++)
-              {
-				    V[1][k] =  V[0][k] ;
-
-			  }*/
-
-/* Affectation du résultat de la multiplication à V[1] */
+/* Affectation du résulta	t de la multiplication à V[1] */
 
 
        for (i=0; i<w; i++)
          for (j=0; j<1; j++)
          {
              for (k=0; k<w; k++)
-             {  printf( "                k vaut %d",k);
-                printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
+             {  //printf( "                k vaut %d",k);
+                //printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
                 V[0][i] += P[i][k]*V[1][k];
                 
              }
