@@ -17,19 +17,15 @@ int main()
 }
 
 
-
 void aff()
 {
     int v, w, i,j;
     int **T,**R;
     float **Trans,**P,**V,**tab_New;
     float *tab;
-    float alpha = 0.85;
-    float E =0.000006;
     int k = 0;
     float *a,*b;
     float *x_1,*x1,*xk,*xk_1;
-
 
 
     /*printf("Entrez le nombre de lignes : ");
@@ -44,9 +40,9 @@ void aff()
 
     R = calloc(v-1 , sizeof(int*));
     tab = calloc(w , sizeof(float));
-    V = calloc(3 , sizeof(float*)); //V contient les tableaux des vecteurs x-1 et x0 ( respectivement dans V[0] et V[1] )
-	a = calloc(w , sizeof(float));
-	b= calloc(w , sizeof(float));
+    V  = calloc(2 , sizeof(float*)); //V contient les tableaux des vecteurs x-1 et x0 ( respectivement dans V[0] et V[1] )
+	a  = calloc(w , sizeof(float));
+	b  = calloc(w , sizeof(float));
 	x_1 = calloc(w , sizeof(float));
 	x1 = calloc(w , sizeof(float));
 	xk = calloc(w , sizeof(float));
@@ -62,23 +58,15 @@ void aff()
 		P[i] = calloc(w, sizeof(float));
         R[i] = calloc(w, sizeof(int));
         tab_New[i] = calloc(w, sizeof(float));
-
-
     }
 
-    for (i = 0 ; i < 3 ; i++)
+    for (i = 0 ; i < 2 ; i++)
     {
        V[i] = calloc(w, sizeof(float));
-
-       if (i > 0)
+       if (i == 0)
        {
           V[i][1] = 1;
-         /* for (j = 0 ; j < w ; j++)
-          {
-            V[i][j] = 1/w;  je voulais faire comme la prof mais ici ça donne toujours 0.00
-          }*/
        }
-
     }
 
     printf("Vecteurs x-1 suivi de x0:\n");
@@ -91,6 +79,32 @@ void aff()
       }
       printf("\n");
     }
+
+
+ float Norme(float **V,int w)
+ {
+   float val=0.00;
+   float norme=0.00;
+   for(i=0;i<w;i++)
+   {
+      a[i] = V[0][i] - V[1][i];
+      b[i] = a[i]*a[i];
+   }
+
+   for(i=0;i<w;i++)
+   {
+		val+=b[i];
+   }
+
+   norme=sqrtf(val);
+   for(i=0; i<w; i++)
+   {
+		 V[1][i] = V[0][i];
+   }
+
+   printf("La norme est %.2f \n",norme);
+   return norme;
+ }
 
 
     printf("Tableau donné à l'initialisation:\n");
@@ -204,7 +218,7 @@ void aff()
 		printf("\n");
      }
 
-     int r=0;
+
 	for (i=0; i<v; i++)
     {
      for (j=0; j<w; j++)
@@ -224,28 +238,8 @@ void aff()
 				printf("\n");
      }
 
-  /* Affectation du résultat de la multiplication à V[1]
-       for (i=0; i<w; i++)
-       {
-         for (j=0; j<1; j++)
-         {
-             for (k=0; k<w; k++)
-            printf( "                k vaut %d",k);
-                printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
-                V[0][i] += P[i][k]*V[1][k];
-                printf("von a alors %.2f \n",V[0][i]);
-           }
 
-
-         }
-
-        /* for (k=0; k<w; k++)
-              {
-				    V[1][k] =  V[0][k] ;
-
-			  }*/
-
-/* Affectation du résultat de la multiplication à V[1] */
+/* Affectation du résultat de la multiplication à V[1]
 
 
        for (i=0; i<w; i++)
@@ -255,7 +249,7 @@ void aff()
              {  printf( "                k vaut %d",k);
                 printf(" \n P[%d][%d] = %.2f  et V[1][%d] = %.2f \n ",i,k,P[i][k],k,V[1][k]);
                 V[0][i] += P[i][k]*V[1][k];
-                
+
              }
          }
          for (k=0; k<w; k++)
@@ -263,13 +257,40 @@ void aff()
 				    V[1][k] =  V[0][k] ;
 				    xk[k] = V[0][k];//x1
 				   // xk_1[k] = V[2][k];//x0
-				 
-
-
-			  }
+			  }*/
 printf("on a alors %.2f \n",V[0][i]);
-     printf("Vecteurs x-1 suivi de x0:\n");
+     printf("Vecteurs x-1 suivi de xx x0:\n");
     for (i=0; i<2; i++)
+    {
+      for (j=0; j<w; j++)
+      {
+        printf("%.2f", V[i][j]);
+      }
+      printf("\n");
+    }
+
+//boucle pour les calculs
+
+
+ //printf(" %.2f",Norme(V,w));
+  while(Norme(V,w) >= 1)
+	{
+		for(i=0; i<w; i++)
+		{
+             for (k=0; k<w; k++)
+             {
+                x_1[i] += P[i][k]*V[0][k];
+             }
+		}
+		for (k=0; k<w; k++)
+             {
+                V[0][k] = x_1[k];
+             }
+
+	}
+
+  printf("Vecteurs x-1 suivi de x0:\n");
+  for(i=0; i<2; i++)
     {
 
       for (j=0; j<w; j++)
@@ -278,38 +299,9 @@ printf("on a alors %.2f \n",V[0][i]);
       }
       printf("\n");
     }
-//boucle pour les calculs
 
-	for(i=0;i<w;i++)
-	{
-		a[i]=V[2][i] - xk_1[k];
-		b[i]=a[i]*a[i];
-	}
-	float val=0.00;
-	float norme=0.00;
-	for(i=0;i<w;i++)
-	{
-		val+=b[i];
-	}
-	norme=sqrtf(val);
-
-	printf("la morme est %.2f \n",norme);
-while(norme > TOLERANCE)
-	{
-		for (i=0; i<w; i++)
-         for (j=0; j<1; j++)
-         {
-             for (k=0; k<w; k++)
-             {  
-                V[0][i] += P[i][k]*V[0][k];
-                
-             }
-         }
-         for (k=0; k<w; k++)
-              {
-				    V[1][k] =  V[0][k] ;
-			  }
-	}
+/* printf(" %.2f",Norme(V,w));
+ printf(" %.2f",Norme(V,w));*/
 
 }
 
