@@ -69,11 +69,10 @@ void aff()
        V[i] = calloc(w, sizeof(float));
 	}
 	
-	for (i = 0 ; i < 2 ; i++)
-    {
+	
 		for (j = 0 ; j < w ; j++)
 			{
-				V[i][j] = 1.00/w;
+				V[1][j] = 1.00/w;
 			}
        /*if (i > 0)
        {
@@ -84,9 +83,7 @@ void aff()
           }
        }*/
 		
-       
-
-    }
+      
     printf("la valeur de 1.00/w est %.2f \n",1.00/w);
 
     printf("Vecteurs x-1 suivi de x0:\n");
@@ -278,16 +275,6 @@ void aff()
 				printf("\n");
      }
      
-printf("on a alors %.2f \n",V[0][i]);
-     printf("Vecteurs x-1 suivi de xx x0:\n");
-    for (i=0; i<2; i++)
-    {
-      for (j=0; j<w; j++)
-      {
-        printf("%.2f", V[i][j]);
-      }
-      printf("\n");
-    }
 
 //boucle pour les calculs
 
@@ -309,16 +296,7 @@ printf("on a alors %.2f \n",V[0][i]);
 
 	}
 
-  printf("Vecteurs x-1 suivi de x0:\n");
-  for(i=0; i<2; i++)
-    {
-
-      for (j=0; j<w; j++)
-      {
-        printf("%.2f", V[i][j]);
-      }
-      printf("\n");
-    }
+ 
 
 /* printf(" %.2f",Norme(V,w));
  printf(" %.2f",Norme(V,w));*/
