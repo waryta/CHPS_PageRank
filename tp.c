@@ -243,8 +243,8 @@ void aff()
      int t=2;
      float e;
      float div;
-     div=1.00/4.00;
-     e=(1-ALPHA)*(1.00/5.00);
+     div=1.00/w;
+     e=(1-ALPHA)*(1.00/w);
      printf("la valeur de e est %.2f %.2f \n",e,div);
 
 	for (i=0; i<v; i++)
@@ -259,7 +259,7 @@ void aff()
 		}
 		else
 		{
-			P[i][j]=1.00/4.00;
+			P[i][j]=1.00/w;
 		}
 		
      }
